@@ -5,7 +5,14 @@ meta {
 }
 
 post {
-  url: https://127.0.0.1:3000/api/v1/users/sessions
-  body: none
+  url: http://127.0.0.1:3000/api/v1/users/sessions
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "login": "test",
+    "password": "test"
+  }
 }

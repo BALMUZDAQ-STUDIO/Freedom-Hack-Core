@@ -1,4 +1,4 @@
-module.exports = function (res, id, text) {
+module.exports = function (id) {
 	let http_code;
 
 	switch(id){
@@ -15,5 +15,5 @@ module.exports = function (res, id, text) {
 			http_code = 500;
 	}
 
-	res.status().json({ "error": { "code": id, "text": text } }).end();
+	return http_code;
 }

@@ -26,21 +26,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(cookie_parser())
 
-
-const api = express.Router();
-const api_v1 = express.Router();
-
 const users = require('./modules/users');
 // const vacancies = require('./modules/vacancies');
-// const employees = require('./modules/employees');
+const employees = require('./modules/employees');
 
 
-api_v1.use("users/" , users.api.v1);
-// api_v1.use("vacancies/" , vacancies.api.v1);
-// api_v1.use("employees/" , employees.api.v1);
+const app_API = express.Router();
+const api_v1 = express.Router();
+
+api_v1.use("/users" , users.api_v1);
+api_v1.use("/employees" , employees.api_v1);
 
 
-api.user("v1/" , api_v1);
-app.use("api/", api);
+app_API.use("/v1" , api_v1);
+app.use("/api" , app_API);
+
 
 app.listen(config.servers.api.port , config.servers.api.ip);

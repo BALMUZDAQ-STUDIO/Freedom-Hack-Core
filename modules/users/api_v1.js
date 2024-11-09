@@ -18,7 +18,7 @@ const uploader = multer({ dest:"uploads" });
 const pool_db =  mysql.createPool({
 	connectionLimit: 1000,
 	host: config.db.host,
-	user: config.secrets.db_logins,
+	user: config.secrets.db_login,
 	database: config.db.db,
 	password: config.secrets.db_password
 });
@@ -46,7 +46,7 @@ module.exports.check_verification = check_verification;
 
 api.post("/", function (req, res) {
 	if(!req.body){
-		error(res, {
+		res.status(error("00001")).json({
 			id: "00001",
 			text: "Haven`t data!"
 		});
@@ -64,9 +64,9 @@ api.post("/", function (req, res) {
 
 	sql_data[2] = password_hash;
 
-	pool_creator.query(sql_comm , sql_data , function(err_sql , data) {
+	pool_db.query(sql_comm , sql_data , function(err_sql , data) {
 		if(err_sql) {
-			error(res, {
+			res.status(error("00002")).json({
 				id: "00002",
 				text: "Sql error"
 			});
@@ -80,24 +80,30 @@ api.post("/", function (req, res) {
 
 
 api.delete("/:id", function (req, res) {
-	
+
 });
 
 api.patch("/:id", function (req, res) {
-	
+
 });
 
 api.post("/sessions", function (req, res) {
 	if(!("login" in req.body) || !("password" in req.body)){
-		error(res, "00001", "Haven`t data");
+		res.status(error("00001")).json({
+			id: "00001",
+			text: "Haven`t data!"
+		});
 		return;
 	}
 
 	const sql_comm = "SELECT id, password FROM users WHERE login = ?;";
 
-	pool_creator.query(sql_comm , [ req.body.login ] , function(err_sql , data) {
+	pool_db.query(sql_comm , [ req.body.login ] , function(err_sql , data) {
 		if( !bcrypt.compareSync(req.body.password, data[0].password) ) {
-			error(res, "00003", "Incorrect password");
+			res.status(error("00003")).json({
+				id: "00003",
+				text: "Incorrect password"
+			});
 			return;
 		}
 
@@ -106,3 +112,5 @@ api.post("/sessions", function (req, res) {
 		res.status(201).cookie("token", token).json({ token }).end();
 	});
 });
+
+module.exports = api;
