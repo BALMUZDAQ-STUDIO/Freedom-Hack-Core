@@ -1,0 +1,19 @@
+meta {
+  name: Create Employees
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://127.0.0.1:3000/api/v1/employees/cvs/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "files_id": [
+      "e101254a-f13d-4900-956e-1916cbe10e9e"
+    ]
+  }
+}

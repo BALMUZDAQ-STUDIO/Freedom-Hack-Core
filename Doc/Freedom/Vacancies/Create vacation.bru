@@ -1,0 +1,21 @@
+meta {
+  name: Create vacation
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1/api/v1/vacancies/
+  body: json
+  auth: none
+}
+
+body:json {
+  { 
+    "title": "Имя вакансии",
+    "specification": "Что-то о вакансии в формате md",
+    "equried_count": 100,
+    "ugency": 0,
+    "salary": "15000-16000.mouths.tenge"
+  }
+}
