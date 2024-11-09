@@ -4,10 +4,14 @@ const FormData = require('form-data');
 
 // Файл, который нужно отправить
 const filePath = './123.pdf';
+const filePath2 = './1234.pdf';
+
 
 // Создаём форму и добавляем в нее файл
 const form = new FormData();
 form.append('files', fs.createReadStream(filePath));
+form.append('files', fs.createReadStream(filePath2));
+
 
 // Опции для запроса
 const options = {
@@ -37,3 +41,5 @@ req.on('error', (error) => {
 
 // Отправляем данные формы
 form.pipe(req);
+
+

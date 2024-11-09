@@ -138,19 +138,17 @@ api.post("/cvs/", function (req , res) {
 				return;	
 			}
 		});
-
 	}
 
 	console.log(req.body.files_id);
 
 
 	for(file_id of req.body.files_id){
-
 		ai.analys_cv(file_id)
 		.then(add_data_in_db)
 	}
 
-
+	res.status(200).json({"status": "start"}).end();
 });
 
 module.exports = api;

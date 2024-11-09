@@ -36,7 +36,7 @@ module.exports.convert_file = convert;
 
 
 async function analys_cv(file_data) {
-	upload_cv = await fileManager.uploadFile(
+	let upload_cv = await fileManager.uploadFile(
 		path.join(__dirname, `../../uploads/${file_data}`),
 		{
 			mimeType: "application/pdf",
