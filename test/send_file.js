@@ -3,13 +3,13 @@ const fs = require('fs');
 const FormData = require('form-data');
 
 // Файл, который нужно отправить
-const filePath = './123.pdf';
-const filePath2 = './1234.pdf';
+// const filePath = './123.pdf';
+const filePath2 = './1234.docx';
 
 
 // Создаём форму и добавляем в нее файл
 const form = new FormData();
-form.append('files', fs.createReadStream(filePath));
+// form.append('files', fs.createReadStream(filePath));
 form.append('files', fs.createReadStream(filePath2));
 
 

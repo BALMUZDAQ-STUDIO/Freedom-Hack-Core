@@ -15,17 +15,23 @@ const fileManager = new GoogleAIFileManager(config.secrets.ai_token);
 
 
 async function convert(file_name) {
+	console.log("TKKKKKKKKKKKKKKKKK");
 	try {
-		const enterPath = path.join(__dirname, `/uploads/${file_name}`);
-		const outputPath = path.join(__dirname, `/uploads/${file_name}`);
+		const enterPath = path.join(__dirname, `../../uploads/${file_name}`);
+		const outputPath = path.join(__dirname, `../../uploads/${file_name}`);
 
-		let data = await fs.readFile(enterPath)
+		const docxFile = fs.readFileSync(enterPath);
 
-		let done = await lib_convert(data, '.pdf', undefined)
+		libre.convert(docxFile, '.pdf', undefined, (err, pdfBuf) => {
+			if (err) {
+			return reject(err);
+			}
 
-		await fs.writeFile(outputPath, done)
+			// Запись PDF в файл
+			fs.writeFileSync(outputPath, pdfBuf);
 
-		return { success: true, file_name: file_name };
+			return { success: true, file_name: file_name };
+		});
 	} catch (err) {
 		console.log(err)
 		return { success: false }

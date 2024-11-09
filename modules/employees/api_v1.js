@@ -54,8 +54,8 @@ api.post("/cvs/upload", uploader.array('files', 1000), async function (req , res
 
 	for(file of req.files){
 
-		console.log("FILE!");
-		console.log(req.files);
+		console.log(file);
+
 
 
 		if(file.mimetype === "application/zip"){
@@ -73,6 +73,8 @@ api.post("/cvs/upload", uploader.array('files', 1000), async function (req , res
 			files_id.push(file.filename);
 		}
 		else if(file.mimetype === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+			console.log("TEEEEEEEEEEEEEEEEEEE");
+
 			ai.convert_file(file.filename);
 			files_id.push(file.filename);
 		}
