@@ -78,8 +78,6 @@
 ## Authors
 
 - [@DeadSmileCode](https://www.github.com/DeadSmileCode)
-- [@RuslanAmirov](https://github.com/tengri)
-
 
 ## Feedback
 
