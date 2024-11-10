@@ -78,8 +78,6 @@ api.post("/cvs/upload", uploader.array('files', 1000), async function (req , res
 					});
 				}
 			});
-
-			for()
 		}
 		else if(file.mimetype === "application/msword") {
 			ai.convert_file(file.filename);

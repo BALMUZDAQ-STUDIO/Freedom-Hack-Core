@@ -21,7 +21,7 @@
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/BALMUSDAQ-STUDIO/Dec-hack.git
+    git clone https://github.com/BALMUSDAQ-STUDIO/Freedom-Hack-Core.git
     cd Dec-hack
     ```
 
@@ -42,7 +42,7 @@
         		- `port`:	
 
     Example:
-    ```env
+    ```json
     {
 		"servers": {
 			"api": {
@@ -54,25 +54,41 @@
 				"ip": "0.0.0.0",
 				"port": "4000",
 				"subdomain": "api"
+			},
+			"db": {
+				"host": "127.0.0.1",
+				"db": "Freedom"
+			},
+			"auth": {
+				"rounds": 6
 			}
 		}
 	}
     ```
 
+    If you run like dev server you need in `config` directory `.env` file:
+    ```env
+    	AI_TOKEN="" HH_TOKEN="" AUTH_SECRET="" DB_LOGIN="" DB_PASSWORD=""
+    ```
+
 4. Run the server:
 
+	If you used for real server
     ```bash
     npm run start
     ```
 
-    After this code
+    If you used for test or dev server
+    ```bash
+    npm run dev
+    ```
 
 ## Key Files
 
 - `index.js`: The file were asseblity API.
-- `modules/courses/index.js`: API for courses.
+- `modules/employees/index.js`: API for employees.
 - `modules/users/index.js`: API for users.
-- `modules/chatbots/index.js`: API for chatbots.
+- `modules/vacansies/index.js`: API for vacansies.
 
 
 ## Authors
