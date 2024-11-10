@@ -35,3 +35,5 @@ Thumbs.db
 config/.env
 uploads/*
 test/*.pdf
+test/*.docx
+test/*.doc

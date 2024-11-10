@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const decompress = require('decompress');
+var Magic = require('mmmagic').Magic;
 
 const config = require('../../config');
 
@@ -14,7 +16,7 @@ const ai = require('./ai');
 
 
 const api = express.Router();
-
+var magic = new Magic();
 
 
 const storage = multer.diskStorage({
@@ -59,14 +61,25 @@ api.post("/cvs/upload", uploader.array('files', 1000), async function (req , res
 
 
 		if(file.mimetype === "application/zip"){
-			let unzip_files = await decompress(file.filename, './', {
-				"filter": file => ( path.extname(file.path) === '.docx' || path.extname(file.path) === '.pdf' || path.extname(file.path) !== '.doc' ),
+			let unzip_files = await decompress( path.join(__dirname, `../../uploads/${file.filename}`) , './uploads', {
 				"map": file => {
 					file.path = uuidv4();
 					files_id.push(file.path);
-					return file;
+
+					magic.detectFile(path.join(__dirname, `../../uploads/${file.path}`) , function (err, result) {
+						if(file.mimetype === "application/msword") {
+							ai.convert_file(file.path);
+						}
+						else if(file.mimetype === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+							ai.convert_file(file.path);
+						}
+
+						return file;
+					});
 				}
 			});
+
+			for()
 		}
 		else if(file.mimetype === "application/msword") {
 			ai.convert_file(file.filename);
@@ -99,8 +112,8 @@ api.post("/cvs/", function (req , res) {
 
 
 	function add_data_in_db(candidate) {
-		const sql_comm = `INSERT employees(id, name, surname, email, phone, gender, education, locate, relocate, cv, \`index\`, experience, level, skills, languages, birthday) 
-							VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+		const sql_comm = `INSERT employees(id, name, surname, email, phone, gender, education, locate, relocate, cv, \`index\`, experience, level, skills, languages, birthday,age) 
+							VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
 		candidate.id = "123456789"
 		candidate.name = "asd";
@@ -130,7 +143,8 @@ api.post("/cvs/", function (req , res) {
 		candidate.level, 
 		candidate.skills, 
 		candidate.languages, 
-		candidate.birthday];
+		candidate.birthday,
+		candidate.age];
 
 		console.log(arr_cand);
 

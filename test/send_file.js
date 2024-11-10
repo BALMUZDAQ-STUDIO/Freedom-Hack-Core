@@ -4,7 +4,7 @@ const FormData = require('form-data');
 
 // Файл, который нужно отправить
 // const filePath = './123.pdf';
-const filePath2 = './1234.docx';
+const filePath2 = './1234.zip';
 
 
 // Создаём форму и добавляем в нее файл
